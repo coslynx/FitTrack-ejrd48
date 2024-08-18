@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "jsx": "preserve",
+    "allowJs": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "types": [
+      "node",
+      "next-auth"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next-plugin-tsconfig"
+      }
+    ]
+  },
+  "include": [
+    "next.config.js",
+    "src",
+    "pages",
+    "public",
+    "styles",
+    "tailwind.config.js",
+    "postcss.config.js",
+    "prisma/schema.prisma"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx"
+  ]
+}
