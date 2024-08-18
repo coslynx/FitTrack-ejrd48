@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(auto()) @map("id") @db.AutoIncrement()
+  email     String   @unique
+  name      String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  goals       Goal[]
+  workouts    Workout[]
+  posts      Post[]
+  followers  User[]  @relation("Follower")
+  following  User[]  @relation("Following")
+}
+
+model Goal {
+  id        Int      @id @default(auto()) @map("id") @db.AutoIncrement()
+  userId    Int
+  type      String
+  target    Float
+  deadline  DateTime
+  progress   Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Workout {
+  id        Int      @id @default(auto()) @map("id") @db.AutoIncrement()
+  userId    Int
+  type      String
+  duration  Int
+  intensity String
+  caloriesBurned Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Post {
+  id        Int      @id @default(auto()) @map("id") @db.AutoIncrement()
+  userId    Int
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Follower {
+  id        Int      @id @default(auto()) @map("id") @db.AutoIncrement()
+  followerId Int
+  followingId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  follower User @relation(fields: [followerId], references: [id])
+  following User @relation(fields: [followingId], references: [id])
+}
+
+model Following {
+  id        Int      @id @default(auto()) @map("id") @db.AutoIncrement()
+  followerId Int
+  followingId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  follower User @relation(fields: [followerId], references: [id])
+  following User @relation(fields: [followingId], references: [id])
+}
